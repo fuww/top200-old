@@ -1,16 +1,11 @@
 package main
 
 import (
-	"bytes"
-	"context"
-	"encoding/json"
-	"io"
+	"fmt"
 	"log"
-	"os"
-	"time"
+	"strings"
 
-	polygon "github.com/polygon-io/client-go/rest"
-	"github.com/polygon-io/client-go/rest/models"
+	"github.com/fuww/top200/api"
 
 	"github.com/joho/godotenv"
 )
@@ -25,8 +20,6 @@ func init() {
 }
 
 func main() {
-
-	POLYGON_API_KEY := os.Getenv("POLYGON_API_KEY")
 
 	tickers := []string{
 		"NKE",
@@ -52,38 +45,23 @@ func main() {
 		"DKS",
 	}
 
-	date := time.Date(2023, 11, 01, 0, 0, 0, 0, time.Local)
-
-	// init client
-	c := polygon.New(POLYGON_API_KEY)
-
 	// Iterate over the slice using a for loop
 	for _, ticker := range tickers {
-		params := models.GetTickerDetailsParams{
-			Ticker: ticker,
-		}.WithDate(models.Date(date))
-
-		// make request
-		r, err := c.GetTickerDetails(context.Background(), params)
-
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		log.Print(r) // do something with the result
-		// log.Print(r.Results.Ticker)
-
-		filename := r.Results.Ticker + "_" + date.Format("2006-01-02") + "_" + ".json"
-
-		f, e := os.Create("data/" + filename)
-		if e != nil {
-			panic(e)
-		}
-		defer f.Close()
-
-		jsonByte, _ := json.Marshal(r)
-		reader := bytes.NewReader(jsonByte)
-		io.Copy(f, reader)
+		// details, err := api.GetDetails(ticker)
+		// print(details, err)
+		printDetails(ticker)
 	}
 
+}
+
+func printDetails(ticker string) {
+	fmt.Printf("Fetching the marketcap for %v ⌛️\n", ticker)
+	details, err := api.GetDetails(strings.ToUpper(ticker))
+
+	if err != nil {
+		fmt.Println("We coudn't get the details. Details:")
+		fmt.Println(err)
+	} else {
+		fmt.Printf("The current marketcap of %v is %v \n", details.Ticker, details.MarketCap)
+	}
 }

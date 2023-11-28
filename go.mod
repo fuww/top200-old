@@ -1,4 +1,4 @@
-module github.com/fuww/top100
+module github.com/fuww/top200
 
 go 1.20
 
