@@ -1,11 +1,9 @@
 package api
 
 type Details struct {
-	Active         bool
-	CurrencyName   string
-	CurrencySymbol string
-	// BaseCurrencyName          string
-	// BaseCurrencySymbol        string
+	Active                    bool
+	CurrencyName              string
+	CurrencySymbol            string
 	Description               string
 	HomepageURL               string
 	MarketCap                 float64

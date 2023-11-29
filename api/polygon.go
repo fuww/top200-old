@@ -21,30 +21,24 @@ func GetDetails(ticker string) (*Details, error) {
 	POLYGON_API_KEY := os.Getenv("POLYGON_API_KEY")
 	date := time.Date(2023, 11, 01, 0, 0, 0, 0, time.Local)
 
-	// init client
 	c := polygon.New(POLYGON_API_KEY)
 
 	params := models.GetTickerDetailsParams{
 		Ticker: ticker,
 	}.WithDate(models.Date(date))
 
-	// make request
 	r, err := c.GetTickerDetails(context.Background(), params)
 	details := Details{}
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	// fmt.Println(r.Results.MarketCap)
-	fmt.Println(r.Results.LastUpdatedUTC)
-
 	jsonBlob, err := json.Marshal(r.Results)
 	if err != nil {
 		return nil, err
 	}
 
-	var result Results // my own
-	// var result = models.GetTickerDetailsResponse.Results // from polygon
+	var result Results
 
 	err = json.Unmarshal(jsonBlob, &result)
 	if err != nil {
@@ -58,17 +52,9 @@ func GetDetails(ticker string) (*Details, error) {
 	details.CurrencyName = result.CurrencyName
 	details.CurrencySymbol = result.CurrencySymbol
 	details.Active = result.Active
-	// details.BaseCurrencyName = result.BaseCurrencyName
-	// details.BaseCurrencySymbol = result.BaseCurrencySymbol
 	details.Description = result.Description
 	details.HomepageURL = result.HomepageURL
 	details.WeightedSharesOutstanding = result.WeightedSharesOutstanding
-	// marketcap := result.MarketCap
-	// details.MarketCap = marketcap
-	// name := result.Name
-	// details.Name = name
-
-	// fmt.Printf("ticker: %v name: %v marketcap: %.f \n", details.Ticker, details.Name, details.MarketCap)
 
 	if err != nil {
 		return nil, err

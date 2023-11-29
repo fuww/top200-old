@@ -45,10 +45,7 @@ func main() {
 		"DKS",
 	}
 
-	// Iterate over the slice using a for loop
 	for _, ticker := range tickers {
-		// details, err := api.GetDetails(ticker)
-		// print(details, err)
 		printDetails(ticker)
 	}
 
