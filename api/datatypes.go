@@ -8,7 +8,6 @@ type Details struct {
 	// BaseCurrencySymbol        string
 	Description               string
 	HomepageURL               string
-	LastUpdatedUTC            Time
 	MarketCap                 float64
 	Name                      string
 	Ticker                    string

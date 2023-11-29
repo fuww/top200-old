@@ -62,6 +62,6 @@ func printDetails(ticker string) {
 		fmt.Println("We coudn't get the details. Details:")
 		fmt.Println(err)
 	} else {
-		fmt.Printf("The current marketcap of %v is %.0f %v, full name: %v and website: %v LastUpdatedUTC: %v \n", details.Ticker, details.MarketCap, strings.ToUpper(details.CurrencyName), details.Name, details.HomepageURL, details.LastUpdatedUTC)
+		fmt.Printf("The current marketcap of %v is %.0f %v, full name: %v and website: %v \n", details.Ticker, details.MarketCap, strings.ToUpper(details.CurrencyName), details.Name, details.HomepageURL)
 	}
 }

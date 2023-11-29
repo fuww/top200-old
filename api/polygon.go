@@ -62,13 +62,11 @@ func GetDetails(ticker string) (*Details, error) {
 	// details.BaseCurrencySymbol = result.BaseCurrencySymbol
 	details.Description = result.Description
 	details.HomepageURL = result.HomepageURL
-	details.LastUpdatedUTC = result.LastUpdatedUTC
 	details.WeightedSharesOutstanding = result.WeightedSharesOutstanding
 	// marketcap := result.MarketCap
 	// details.MarketCap = marketcap
 	// name := result.Name
 	// details.Name = name
-	fmt.Println(result.LastUpdatedUTC)
 
 	// fmt.Printf("ticker: %v name: %v marketcap: %.f \n", details.Ticker, details.Name, details.MarketCap)
 
