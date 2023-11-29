@@ -1,7 +1,16 @@
 package api
 
 type Details struct {
-	Ticker    string
-	Name      string
-	MarketCap int64
+	Active         bool
+	CurrencyName   string
+	CurrencySymbol string
+	// BaseCurrencyName          string
+	// BaseCurrencySymbol        string
+	Description               string
+	HomepageURL               string
+	LastUpdatedUTC            Time
+	MarketCap                 float64
+	Name                      string
+	Ticker                    string
+	WeightedSharesOutstanding int64
 }

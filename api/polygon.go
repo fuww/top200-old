@@ -35,28 +35,48 @@ func GetDetails(ticker string) (*Details, error) {
 		log.Fatal(err)
 	}
 
-	bodyBytes, err := json.Marshal(r.Results)
+	// fmt.Println(r.Results.MarketCap)
+	fmt.Println(r.Results.LastUpdatedUTC)
+
+	jsonBlob, err := json.Marshal(r.Results)
 	if err != nil {
 		return nil, err
 	}
 
-	// fmt.Print(r.Results.MarketCap)
+	var result Results // my own
+	// var result = models.GetTickerDetailsResponse.Results // from polygon
 
-	var result Results
-	json.Unmarshal(bodyBytes, &result)
-	// &result = r.Results
+	err = json.Unmarshal(jsonBlob, &result)
+	if err != nil {
+		fmt.Println("error:", err)
+	}
+	// fmt.Printf("%+v", result)
+
 	details.Ticker = ticker
-	marketcap := result.MarketCap
-	details.MarketCap = marketcap
-	name := result.Name
-	details.Name = name
-	// details.MarketCap = market_cap
+	details.MarketCap = result.MarketCap
+	details.Name = result.Name
+	details.CurrencyName = result.CurrencyName
+	details.CurrencySymbol = result.CurrencySymbol
+	details.Active = result.Active
+	// details.BaseCurrencyName = result.BaseCurrencyName
+	// details.BaseCurrencySymbol = result.BaseCurrencySymbol
+	details.Description = result.Description
+	details.HomepageURL = result.HomepageURL
+	details.LastUpdatedUTC = result.LastUpdatedUTC
+	details.WeightedSharesOutstanding = result.WeightedSharesOutstanding
+	// marketcap := result.MarketCap
+	// details.MarketCap = marketcap
+	// name := result.Name
+	// details.Name = name
+	fmt.Println(result.LastUpdatedUTC)
 
-	fmt.Printf("name: %v ticker: %v marketcap: %v \n", details.Name, details.Ticker, details.MarketCap)
+	// fmt.Printf("ticker: %v name: %v marketcap: %.f \n", details.Ticker, details.Name, details.MarketCap)
 
 	if err != nil {
 		return nil, err
 	}
+
+	// TODO: create store to file function
 	// log.Print(r) // do something with the result
 	// // log.Print(r.Results.Ticker)
 
